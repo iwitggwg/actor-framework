@@ -10,16 +10,6 @@
 #include <sstream>
 #include <iostream>
 
-namespace std {
-string to_string(const thread::id& x) {
-  ostringstream os;
-  os << x;
-  return os.str();
-}
-}
-
-
-
 #include "caf/all.hpp"
 
 using std::cout;

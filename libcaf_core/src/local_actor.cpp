@@ -448,10 +448,9 @@ invoke_message_result local_actor::invoke_message(mailbox_element_ptr& ptr,
               ref_fun.handle_timeout();
             }
           } else if (! ref_fun(visitor, current_element_->msg)) {
-          //} else if (! post_process_invoke_res(this, false,
-          //                                     ref_fun(current_element_->msg))) {
-            CAF_LOG_WARNING("multiplexed response failure occured:" << CAF_ARG(id()));
-            quit(exit_reason::unhandled_request_error);
+            CAF_LOG_WARNING("multiplexed response failure occured:"
+                            << CAF_ARG(id()));
+            quit(exit_reason::unexpected_message);
           }
           ptr.swap(current_element_);
           mark_multiplexed_arrived(mid);
@@ -469,10 +468,8 @@ invoke_message_result local_actor::invoke_message(mailbox_element_ptr& ptr,
             }
           } else {
             if (! fun(visitor, current_element_->msg)) {
-            //if (! post_process_invoke_res(this, false,
-            //                              fun(current_element_->msg))) {
-              CAF_LOG_WARNING("sync response failure occured:" << CAF_ARG(id()));
-              quit(exit_reason::unhandled_request_error);
+              CAF_LOG_WARNING("unexpected response:" << CAF_ARG(id()));
+              quit(exit_reason::unexpected_message);
             }
           }
           ptr.swap(current_element_);

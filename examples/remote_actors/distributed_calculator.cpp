@@ -38,7 +38,7 @@ using rebind_atom = atom_constant<atom("rebind")>;
 using reconnect_atom = atom_constant<atom("reconnect")>;
 
 // our "service"
-behavior calculator() {
+behavior calculator_fun() {
   return {
     [](plus_atom, int a, int b) -> message {
       return make_message(result_atom::value, a + b);
@@ -280,7 +280,7 @@ int main(int argc, char** argv) {
   cfg.load<io::middleman>();
   actor_system system{cfg};
   if (is_server) {
-    auto calc = system.spawn(calculator);
+    auto calc = system.spawn(calculator_fun);
     // try to publish math actor at given port
     cout << "*** try publish at port " << port << endl;
     auto p = system.middleman().publish(calc, port);

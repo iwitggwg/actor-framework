@@ -116,7 +116,8 @@ std::string get_rtti_from_mpi(const uniform_type_info_map& types) {
   return f(types);
 }
 
-///
+/// Represents an actor environment including scheduler,
+/// registry, and optional components such as a middleman.
 class actor_system {
 public:
   friend class abstract_actor;
@@ -169,14 +170,17 @@ public:
 
   virtual ~actor_system();
 
+  /// Stores a string representation of actor interfaces.
   using message_types_set = std::set<std::string>;
 
+  /// Returns an empty string set (representing the
+  /// interface of dynamically typed actors).
   inline message_types_set message_types(const actor&) {
     return message_types_set{};
   }
 
-  /// Returns a string representation of the messaging
-  /// interface using portable names;
+  /// Returns a string representation for the
+  /// interface of `typed_actor<Ts...>`.
   template <class... Ts>
   message_types_set message_types(const typed_actor<Ts...>&) {
     static_assert(sizeof...(Ts) > 0, "empty typed actor handle given");
@@ -388,6 +392,7 @@ public:
   }
 
   /// @cond PRIVATE
+  /// Returns the name of the network backend used by the middleman.
   inline atom_value backend_name() const {
     return backend_name_;
   }

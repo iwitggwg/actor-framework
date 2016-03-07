@@ -31,9 +31,9 @@ using namespace caf;
 
 namespace {
 
-using calculator = typed_actor<replies_to<int, int>::with<int>>;
+using calculator_fun = typed_actor<replies_to<int, int>::with<int>>;
 
-calculator::behavior_type adder() {
+calculator_fun::behavior_type adder() {
   return {
     [](int x, int y) {
       return x + y;
@@ -41,7 +41,7 @@ calculator::behavior_type adder() {
   };
 }
 
-calculator::behavior_type multiplier() {
+calculator_fun::behavior_type multiplier() {
   return {
     [](int x, int y) {
       return x * y;
@@ -49,7 +49,7 @@ calculator::behavior_type multiplier() {
   };
 }
 
-calculator::behavior_type divider() {
+calculator_fun::behavior_type divider() {
   return {
     [](int x, int y) -> optional<int> {
       if (y == 0)
@@ -97,7 +97,7 @@ struct fixture {
 CAF_TEST_FIXTURE_SCOPE(function_view_tests, fixture)
 
 CAF_TEST(empty_function_fiew) {
-  function_view<calculator> f;
+  function_view<calculator_fun> f;
   try {
     f(10, 20);
     CAF_ERROR("line must be unreachable");
@@ -112,7 +112,7 @@ CAF_TEST(single_res_function_view) {
   CAF_CHECK(f(3, 4) == 7);
   CAF_CHECK(f != nullptr);
   CAF_CHECK(nullptr != f);
-  function_view<calculator> g;
+  function_view<calculator_fun> g;
   g = std::move(f);
   CAF_CHECK(f == nullptr);
   CAF_CHECK(nullptr == f);

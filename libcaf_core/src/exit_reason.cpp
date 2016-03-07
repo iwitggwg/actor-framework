@@ -29,8 +29,8 @@ const char* to_string(exit_reason x) {
       return "normal";
     case exit_reason::unhandled_exception:
       return "unhandled_exception";
-    case exit_reason::unhandled_request_error:
-      return "unhandled_request_error";
+    case exit_reason::unexpected_message:
+      return "unexpected_message";
     case exit_reason::unknown:
       return "unknown";
     case exit_reason::out_of_workers:

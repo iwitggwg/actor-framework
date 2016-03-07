@@ -31,11 +31,11 @@ enum class exit_reason : uint8_t {
   /// Indicates that an actor finished execution.
   normal = 0x01,
 
-  /// Indicates that an actor finished execution because of an unhandled exception.
+  /// Indicates that an actor caught an unexpected exception.
   unhandled_exception = 0x02,
 
-  /// Indicates that the actor received an unexpected synchronous reply message.
-  unhandled_request_error = 0x04,
+  /// Indicates that the actor received an unexpected message.
+  unexpected_message = 0x04,
 
   /// Indicates that the exit reason for this actor is unknown, i.e.,
   /// the actor has been terminated and no longer exists.
